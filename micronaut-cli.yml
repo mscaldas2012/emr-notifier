@@ -1,0 +1,5 @@
+profile: kafka
+defaultPackage: emr.notifier
+---
+testFramework: spek
+sourceLanguage: kotlin

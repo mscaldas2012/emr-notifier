@@ -1,0 +1,14 @@
+---
+micronaut:
+  application:
+    name: emr-notifier
+#kafka:
+#  bootstrap:
+#    servers: localhost:9092
+
+
+redox:
+  hl7ApiKey: c5d66885-3e98-4207-9a03-397599dda7e4
+  hl7Secret: NrOYCz5lFE3VhLy6fgmMqmgHbzlR268SunfMSJttyWBWoRrN6imAAtNtHQ7u4WMcxvJPYSVO
+  fhirApiKey: b987f5d7-2b73-46d4-9d9e-7e19f2097e8c
+  fhirSecret: kluMnbOBpxfvMllqmYtASJwGKXfdia7rBWsBmc3TsEGgj7yWGXY3s4FxOOlTXPoEQOfyj94C
