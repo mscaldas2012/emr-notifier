@@ -6,7 +6,6 @@ micronaut:
 #  bootstrap:
 #    servers: localhost:9092
 
-
 redox:
   hl7ApiKey: c5d66885-3e98-4207-9a03-397599dda7e4
   hl7Secret: NrOYCz5lFE3VhLy6fgmMqmgHbzlR268SunfMSJttyWBWoRrN6imAAtNtHQ7u4WMcxvJPYSVO

@@ -12,7 +12,11 @@ interface RedoxProxy {
     @Post("/auth/authenticate")
     fun authenticate( apiKey:String,  secret: String): RedoxToken
 
+    @Post("/endpoint", processes = [MediaType.APPLICATION_JSON], consumes=[MediaType.APPLICATION_JSON])
+    fun sendData(@Header("Authorization") token: String, @Body data: HL7Payload)
+
     @Post("/endpoint", processes = [MediaType.APPLICATION_XML], consumes=[MediaType.APPLICATION_XML])
     fun sendData(@Header("Authorization") token: String, @Body data: String)
+
 }
 

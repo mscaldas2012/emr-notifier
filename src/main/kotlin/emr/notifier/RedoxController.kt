@@ -7,6 +7,7 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import org.slf4j.LoggerFactory
+import java.util.*
 
 @Controller("/redox")
 class RedoxController(val config:RedoxConfig, val redoxProxy: RedoxProxy) {
@@ -20,14 +21,17 @@ class RedoxController(val config:RedoxConfig, val redoxProxy: RedoxProxy) {
         return redoxProxy.authenticate(config.hl7ApiKey, config.hl7Secret)
     }
 
-    @Post("/sendHL7Data")
+    @Post("/sendHL7Data", consumes=[MediaType.TEXT_PLAIN])
     fun send(@Body data:String): HttpStatus {
         logger.info("AUDIT:: Sending data to REDOX...")
         val token =  redoxProxy.authenticate(config.hl7ApiKey, config.hl7Secret)
-        redoxProxy.sendData("Bearer ${token.accessToken}", data)
+
+        val payload = HL7Payload(Base64.getEncoder().encodeToString(data.toByteArray()))
+//        val gson = Gson()
+//        println(gson.toJson(payload))
+        redoxProxy.sendData("Bearer ${token.accessToken}", payload)
         return HttpStatus.OK
     }
-
 
     @Post("/sendCarePlan", processes = [MediaType.APPLICATION_XML])
     fun sendCarePlan(@Body data:String): HttpStatus {
