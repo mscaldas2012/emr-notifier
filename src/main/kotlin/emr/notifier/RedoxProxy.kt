@@ -1,5 +1,6 @@
 package emr.notifier
 
+import emr.notifier.model.HL7Payload
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Header

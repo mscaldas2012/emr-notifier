@@ -1,5 +1,6 @@
 package emr.notifier
 
+import emr.notifier.model.HL7Payload
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Body
@@ -12,7 +13,7 @@ import java.util.*
 @Controller("/redox")
 class RedoxController(val config:RedoxConfig, val redoxProxy: RedoxProxy) {
 
-    val logger = LoggerFactory.getLogger(RedoxController::class.java)
+    val logger =  LoggerFactory.getLogger(RedoxController::class.java)
     @Get(value ="/token")
     fun authenticate(): RedoxToken {
         logger.info("AUDIT:: Authenticating with REDOX!")
@@ -27,8 +28,6 @@ class RedoxController(val config:RedoxConfig, val redoxProxy: RedoxProxy) {
         val token =  redoxProxy.authenticate(config.hl7ApiKey, config.hl7Secret)
 
         val payload = HL7Payload(Base64.getEncoder().encodeToString(data.toByteArray()))
-//        val gson = Gson()
-//        println(gson.toJson(payload))
         redoxProxy.sendData("Bearer ${token.accessToken}", payload)
         return HttpStatus.OK
     }
