@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emr-notifier
+  labels:
+    app: emr-notifier
+spec:
+  selector:
+    matchLabels:
+      app: emr-notifier
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: emr-notifier
+    spec:
+      containers:
+        - name: emr-notifier
+          image: 471108701394.dkr.ecr.us-east-1.amazonaws.com/arln/emr-notifier:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: emr-notifier-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: emr-notifier
+  name: emr-notifier
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: emr-notifier
+
+#---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: emr-notifier-configmap
+#  namespace: default
+#data:
+#  AWS_ACCESS_KEY_ID: AKIAW3MCEJTJIU5ERPRS
+#  AWS_SECRET_ACCESS_KEY: {{secretkey}}
+#  JAVA_OPTS: -Dlogging.gov.cdc.ncezid.arln.csvproducer=DEBUG
+#  kafka.bootstrap.servers: arln-cp-kafka-headless:9092

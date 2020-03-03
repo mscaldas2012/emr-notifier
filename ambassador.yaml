@@ -1,0 +1,8 @@
+---
+apiVersion: getambassador.io/v1
+kind:  Mapping
+metadata:
+  name:  emr-notifier
+spec:
+  prefix: /emr-notifier/
+  service: emr-notifier:8080
