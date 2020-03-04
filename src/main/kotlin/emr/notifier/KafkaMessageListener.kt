@@ -16,7 +16,11 @@ class KafkaMessageListener(val redoxProxy: RedoxProxy,
                            @Value("\${app.messagesofinterest}") val messagesOfInterest: String) {
 
     //CarePlan to be submitted to Redox.
-    val carePlan = KafkaMessageListener::class.java.getResource("CarePlanBundle.xml").readText()
+    var carePlan: String
+
+    init {
+        carePlan = KafkaMessageListener::class.java.getResource("/CarePlanBundle.xml").readText()
+    }
 
     companion object {
         val logger =  LoggerFactory.getLogger(KafkaMessageListener::class.java)
@@ -31,10 +35,10 @@ class KafkaMessageListener(val redoxProxy: RedoxProxy,
             val redoxPayload = HL7Payload(message.content)
             val hl7Token =  redoxProxy.authenticate(config.hl7ApiKey, config.hl7Secret)
             //Send HL7 message:
-            redoxProxy.sendData(hl7Token.accessToken, redoxPayload)
+            redoxProxy.sendData("Bearer ${hl7Token.accessToken}", redoxPayload)
             //Send CarPlan:
             val fhirToken = redoxProxy.authenticate(config.fhirApiKey, config.fhirSecret)
-            redoxProxy.sendData(fhirToken.accessToken, carePlan)
+            redoxProxy.sendData("Bearer ${fhirToken.accessToken}", carePlan)
         } else {
             logger.info("Message is not relevant... ${message.message_controller_id}")
         }
