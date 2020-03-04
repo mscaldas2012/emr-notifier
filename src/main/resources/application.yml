@@ -17,7 +17,7 @@ app:
   consumer:
     group: himms-tst
   incomingtopic: topic_2
-  messagesofinterest: HIMMS-2020-NDM
+  messagesofinterest: HIMSS-2020-NDM
 
 redox:
   hl7ApiKey: c5d66885-3e98-4207-9a03-397599dda7e4
